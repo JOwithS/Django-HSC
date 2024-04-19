@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 from .models import Usuario,Direccion,Comuna,Region,TipoUsuario, Producto, Marca,Categoria,TipoProd,Marca
 from django.contrib import messages
 from .Carrito import Carrito
+from rest_framework import viewsets
+from .models import Categoria, Producto
+from .serializers import CategoriaSerializer, ProductoSerializer
 
 # Create your views here.
 def inicio(request):
@@ -343,6 +346,12 @@ def limpiar_producto(request,usuario):
     carrito.limpiar()
     return render(request,'Inicio/carrito.html',contexto)
 
+""" API REST """
 
+class CategoriaViewSet(viewsets.ModelViewSet):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
 
-
+class ProductoViewSet(viewsets.ModelViewSet):
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer

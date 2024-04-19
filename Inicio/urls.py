@@ -1,8 +1,17 @@
-from django.urls import path
-from .views import iniciar,iniciar_sesion, inicio, inicioadmin, registrar_m, registrarse, newProd,addprod,vistamod,eliminarProducto,menuadmin,micadmin,tecladoadmin,mouseAdmin,ramAdmin,graficaAdmin,procesadorAdmin,mostrarTeclado,teclado,mostrarMic,micro,mostrarMouse,mouse,mostrarGrafica,grafica,mostrarRam,ram,mostrarProcesador,procesador,carrito,perfilusuario,edicionProducto,editarProducto, mostrarperfil, modificarPerfil ,agregar_producto,eliminar_producto,restar_producto,limpiar_producto
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from .views import (iniciar, iniciar_sesion, inicio, inicioadmin, registrar_m, registrarse, newProd, addprod, vistamod,
+                    eliminarProducto, menuadmin, micadmin, tecladoadmin, mouseAdmin, ramAdmin, graficaAdmin, procesadorAdmin,
+                    mostrarTeclado, teclado, mostrarMic, micro, mostrarMouse, mouse, mostrarGrafica, grafica, mostrarRam, ram,
+                    mostrarProcesador, procesador, carrito, perfilusuario, edicionProducto, editarProducto, mostrarperfil,
+                    modificarPerfil, agregar_producto, eliminar_producto, restar_producto, limpiar_producto,
+                    CategoriaViewSet, ProductoViewSet)
 from django.conf import settings
 from django.conf.urls.static import static
 
+router = DefaultRouter()
+router.register(r'categorias', CategoriaViewSet)
+router.register(r'productos', ProductoViewSet)
 
 urlpatterns = [
 
@@ -75,5 +84,7 @@ urlpatterns = [
 
     path('edicionProducto/<idProducto>', edicionProducto, name="edicionProducto"),
     path('editarProducto/<idProducto>', editarProducto, name="editarProducto"),
+
+    path('api/', include(router.urls))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
